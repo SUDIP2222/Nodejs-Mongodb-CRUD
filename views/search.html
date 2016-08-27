@@ -22,8 +22,8 @@
         <td class="text-center">{{customer.address}}</td>
         <td class="text-center">{{customer.email}}</td>
         <td class="text-center">{{customer.phone}}</td>
-        <td><center><a href = "customers/{{customer.id}}/edit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
-            <a href = "customers/{{customer.id}}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a></center></td>
+        <td><center><a href = "http://localhost:3000/customers/{{customer.id}}/edit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+            <a href = "http://localhost:3000/customers/{{customer.id}}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a></center></td>
 
     </tr>
     {% endfor %}
