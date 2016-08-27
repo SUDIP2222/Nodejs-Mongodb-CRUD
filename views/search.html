@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<table class="table table-bordered ">
+    <thead>
+    <tr>
+        <th class="text-center">Name</th>
+        <th class="text-center">Address</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Phone</th>
+        <th class="text-center">Option</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    {% for customer in customers %}
+    <tr >
+
+        <td class="text-center">{{customer.name}}</td>
+        <td class="text-center">{{customer.address}}</td>
+        <td class="text-center">{{customer.email}}</td>
+        <td class="text-center">{{customer.phone}}</td>
+        <td><center><a href = "customers/{{customer.id}}/edit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+            <a href = "customers/{{customer.id}}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a></center></td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock %}
