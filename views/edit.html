@@ -12,21 +12,49 @@
                 <div class="form-group">
                     <label >Name : </label>
                     <input type="text" name="name" value="{{customer.name}}" placeholder="Enter Customer Name" class="form-control">
+                    {% for error in errors %}
+                          {% if error.param=='name' %}
+                                <span class="help-block alert-danger">
+                                      <strong>{{error.msg}}</strong>
+                                </span>
+                          {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div class="form-group">
                     <label>Email : </label>
                     <input type="email" name="email" value="{{customer.email}}" placeholder="Enter Customer Email" class="form-control">
+                    {% for error in errors %}
+                          {% if error.param==='email' %}
+                                <span class="help-block alert-danger">
+                                      <strong>{{error.msg}}</strong>
+                                </span>
+                          {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div class="form-group">
                     <label >Address : </label>
                     <input type="address" name="address" value="{{customer.address}}" placeholder="Enter Customer Address" class="form-control">
+                    {% for error in errors %}
+                          {% if error.param==='address' %}
+                                <span class="help-block alert-danger">
+                                      <strong>{{error.msg}}</strong>
+                                </span>
+                          {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div class="form-group">
                     <label >phone : </label>
                     <input type="text" name="phone" value="{{customer.phone}}" placeholder="Enter Student Customer Number" class="form-control">
+                    {% for error in errors %}
+                          {% if error.param==='phone' %}
+                                <span class="help-block alert-danger">
+                                      <strong>{{error.msg}}</strong>
+                                </span>
+                          {% endif %}
+                    {% endfor %}
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">Submit</button>
 

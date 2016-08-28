@@ -24,16 +24,38 @@ router.get('/create', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+    req.assert('name', 'Name is required').notEmpty();
+    req.assert('email', 'A valid email is required').isEmail();
+    req.assert('address', 'Address is required').notEmpty();
+    req.assert('phone', 'Phone Number is required').notEmpty();
 
-    new customer({
-        name : req.body.name,
-        email : req.body.email,
-        address : req.body.address,
-        phone : req.body.phone
-    }).save(function(err, data) {
+    var errors = req.validationErrors();
+
+    if( !errors){
+        new customer({
+            name : req.body.name.toLowerCase(),
+            email : req.body.email,
+            address : req.body.address,
+            phone : req.body.phone
+        }).save(function(err, data) {
             console.log(data)
             res.redirect('/customers');
         });
+
+    }
+    else{
+        res.render(
+            'create',
+            {
+                title : 'Create',
+                errors: errors
+            }
+
+        );
+        console.log(errors);
+    }
+
+
 
 });
 
@@ -51,17 +73,42 @@ router.get('/:id/edit', function(req, res) {
 
 router.put('/:id', function(req, res) {
     var query = {"_id": req.params.id};
-    var update = {
-        name : req.body.name,
-        email : req.body.email,
-        address : req.body.address,
-        phone : req.body.phone
-    };
-    var options = {new: true};
-    customer.findOneAndUpdate(query, update, options, function(err, data){
-        console.log(data)
-        res.redirect('/customers');
-    });
+    req.assert('name', 'Name is required').notEmpty();
+    req.assert('email', 'A valid email is required').isEmail();
+    req.assert('address', 'Address is required').notEmpty();
+    req.assert('phone', 'Phone Number is required').notEmpty();
+
+    var errors = req.validationErrors();
+    if( !errors) {
+        var update = {
+            name: req.body.name.toLowerCase(),
+            email: req.body.email,
+            address: req.body.address,
+            phone: req.body.phone
+        };
+        var options = {new: true};
+        customer.findOneAndUpdate(query, update, options, function (err, data) {
+            console.log(data)
+            res.redirect('/customers');
+        });
+    }
+    else{
+
+        var query = {"_id": req.params.id};
+        customer.findOne(query, function(err, data){
+            console.log(data)
+            res.render(
+                'edit',
+                {
+                    title : 'Edit ' + data.name,
+                    customer : data,
+                    errors: errors,
+                }
+            );
+        });
+        console.log(errors);
+
+    }
 });
 
 router.get('/:id', function(req, res) {
@@ -74,7 +121,7 @@ router.get('/:id', function(req, res) {
 });
 router.get('/name/search', function(req, res) {
     console.log(req.query["search"]);
-    var query = {"name": new RegExp(req.query["search"])};
+    var query = {"name": new RegExp( req.query["search"].toLowerCase())};
     customer.find(query, function(err, data){
         console.log(data)
         res.render(
